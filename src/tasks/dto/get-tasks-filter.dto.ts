@@ -1,4 +1,6 @@
-export class CreateTaskDto {
-  title: string;
-  description: string;
+import { TaskStatus } from '../tasks.model';
+
+export class GetTasksFilterDto {
+  status?: TaskStatus;
+  search?: string;
 }
