@@ -4,6 +4,7 @@ import { SingUpCredentialsDto } from './dto/singup.credentials.dto';
 import {
   ConflictException,
   InternalServerErrorException,
+  UnauthorizedException,
 } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 
@@ -24,6 +25,25 @@ export class UsersRepository extends Repository<UserEntity> {
       } else {
         throw new InternalServerErrorException();
       }
+    }
+  }
+
+  async findUserWithPassword(
+    singUpCredentialsDto: SingUpCredentialsDto,
+  ): Promise<UserEntity> {
+    const { username } = singUpCredentialsDto;
+
+    const query = this.createQueryBuilder('user');
+
+    const user = await query
+      .andWhere('user.username = :username', { username })
+      .addSelect('user.password')
+      .getOne();
+
+    if (user) {
+      return user;
+    } else {
+      throw new UnauthorizedException('Please check for your login');
     }
   }
 }

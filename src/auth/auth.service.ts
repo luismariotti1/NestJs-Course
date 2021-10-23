@@ -19,11 +19,12 @@ export class AuthService {
     return this.usersRepository.createUser(singUpCredentialsDto);
   }
 
-  async singIn(
-    singInCredentialsDto: SingInCredentialsDto,
-  ): Promise<{ accessToken: string }> {
-    const { password, username } = singInCredentialsDto;
-    const user = await this.usersRepository.findOne({ username });
+  async singIn(singInCredentialsDto: SingInCredentialsDto) {
+    const user = await this.usersRepository.findUserWithPassword(
+      singInCredentialsDto,
+    );
+
+    const { username, password } = singInCredentialsDto;
 
     if (user && (await bcrypt.compare(password, user.password))) {
       const payload: JwtPayload = { username };

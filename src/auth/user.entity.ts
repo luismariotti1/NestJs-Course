@@ -1,4 +1,6 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { TaskEntity } from '../tasks/task.entity';
+import { Exclude } from 'class-transformer';
 
 @Entity()
 export class UserEntity {
@@ -8,6 +10,11 @@ export class UserEntity {
   @Column({ unique: true })
   username: string;
 
-  @Column()
+  @Column({ select: false })
   password: string;
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  @OneToMany((_type) => TaskEntity, (task) => task.user, { eager: true })
+  @Exclude({ toPlainOnly: true })
+  tasks: TaskEntity[];
 }
