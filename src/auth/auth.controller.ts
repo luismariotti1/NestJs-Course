@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Res } from '@nestjs/common';
+import { Body, Controller, Post, Res, Get} from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { SingUpCredentialsDto } from './dto/singup.credentials.dto';
 import { SingInCredentialsDto } from './dto/singin.credentials.dto';
@@ -12,6 +12,11 @@ export class AuthController {
   singUp(@Body() singUpCredentialsDto: SingUpCredentialsDto): Promise<void> {
     return this.authService.singUp(singUpCredentialsDto);
   }
+
+  // @Get('/singout')
+  // singOut(): Promise<void> {
+  //   // return this.authService.singUp(singUpCredentialsDto);
+  // }
 
   @Post('/singin')
   async singIn(
