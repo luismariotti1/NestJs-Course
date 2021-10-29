@@ -7,4 +7,19 @@ export class EnergyPrice {
 
   @Column()
   companyName: string;
+
+  @Column()
+  month: string;
+
+  @Column()
+  group: string;
+
+  @Column({ type: 'numeric' })
+  valueKWH: number;
+
+  @Column()
+  flagType: string;
+
+  @Column({ type: 'numeric' })
+  valueKWHFlag: number;
 }

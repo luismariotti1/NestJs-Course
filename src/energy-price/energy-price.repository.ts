@@ -5,11 +5,7 @@ import { CreateEnergyPriceDto } from './dto/create-energy-price.dto';
 @EntityRepository(EnergyPrice)
 export class EnergyPriceRepository extends Repository<EnergyPrice> {
   async createEnergyPrice(createEnergyPriceDto: CreateEnergyPriceDto) {
-    const { companyName } = createEnergyPriceDto;
-
-    const energyPrice = this.create({
-      companyName,
-    });
+    const energyPrice = this.create(createEnergyPriceDto);
 
     await this.save(energyPrice);
 
